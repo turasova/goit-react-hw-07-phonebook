@@ -19,7 +19,7 @@ const contactInitialState = {
     contacts: [],
     isLoading: false,
     error: null,
-    newContact: null
+    
 };
 
 export const contactsSlice = createSlice({
@@ -31,14 +31,14 @@ export const contactsSlice = createSlice({
                 state.contacts =payload
             })
              .addCase(addContactThunk.fulfilled, (state, { payload }) => {
-                state.newContact = payload
+                state.contacts.unshift(payload)
             })
              .addCase(deleteContactThunk.fulfilled,  (state, { payload }) => {
                 state.contacts = state.contacts.filter(contact => contact.id !== payload.id)
             })
             .addMatcher((action) => action.type.endsWith('/pending'), handlePending)
             .addMatcher((action) => action.type.endsWith('/rejected'), handleRejected)
-        .addMatcher((action)=> action.type.endsWith('/fulfilled'), handleFulfilled)
+            .addMatcher((action)=> action.type.endsWith('/fulfilled'), handleFulfilled)
     }
 })
 

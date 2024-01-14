@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import css from './ContactList.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-
 import { getFilter } from 'store/filterSlice';
 import { deleteContactThunk, getContactsThunk } from 'store/thunks';
 import { getContactValue } from 'store/contactsSlice';

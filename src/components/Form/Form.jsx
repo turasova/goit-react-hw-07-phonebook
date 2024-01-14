@@ -1,7 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import css from './Form.module.css';
 import { useState } from 'react';
-//import { nanoid } from 'nanoid';
 import Notiflix from 'notiflix';
 import { getContactValue } from 'store/contactsSlice';
 import { addContactThunk } from 'store/thunks';
@@ -28,12 +27,6 @@ export const Form = () => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    // const data = { name, number };
-
-    // const newContact = {
-    //   ...data,
-    //   id: nanoid(),
-    // };
 
     const newContact = { name, phone };
 
