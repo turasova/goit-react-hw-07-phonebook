@@ -1,10 +1,17 @@
+import { useEffect } from 'react';
 import css from './ContactList.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteContact, getContactValue } from 'store/contactsSlice';
+
 import { getFilter } from 'store/filterSlice';
+import { deleteContactThunk, getContactsThunk } from 'store/thunks';
+import { getContactValue } from 'store/contactsSlice';
 
 export const ContactList = () => {
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getContactsThunk());
+  }, [dispatch]);
 
   const contacts = useSelector(getContactValue);
   const filterContacts = useSelector(getFilter);
@@ -16,15 +23,15 @@ export const ContactList = () => {
   );
 
   const delContact = contactId => {
-    dispatch(deleteContact(contactId));
+    dispatch(deleteContactThunk(contactId));
   };
 
   return (
     <ul className={css.listContact}>
-      {visibleContacts.map(({ name, number, id }) => (
+      {visibleContacts.map(({ name, phone, id }) => (
         <li className={css.contactItem} key={id}>
           <p>
-            {name}: {number}
+            {name}: {phone}
           </p>
           <button
             type="button"

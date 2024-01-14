@@ -1,13 +1,14 @@
 import { useDispatch, useSelector } from 'react-redux';
 import css from './Form.module.css';
 import { useState } from 'react';
-import { addContact, getContactValue } from 'store/contactsSlice';
-import { nanoid } from 'nanoid';
+//import { nanoid } from 'nanoid';
 import Notiflix from 'notiflix';
+import { getContactValue } from 'store/contactsSlice';
+import { addContactThunk } from 'store/thunks';
 
 export const Form = () => {
   const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
+  const [phone, setNumber] = useState('');
   const dispatch = useDispatch();
   const contacts = useSelector(getContactValue);
 
@@ -27,12 +28,14 @@ export const Form = () => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    const data = { name, number };
+    // const data = { name, number };
 
-    const newContact = {
-      ...data,
-      id: nanoid(),
-    };
+    // const newContact = {
+    //   ...data,
+    //   id: nanoid(),
+    // };
+
+    const newContact = { name, phone };
 
     if (isDuplicated(contacts, newContact) !== undefined) {
       Notiflix.Notify.failure(`${newContact.name} is already in contacts`, {
@@ -44,7 +47,7 @@ export const Form = () => {
       return;
     }
 
-    dispatch(addContact(newContact));
+    dispatch(addContactThunk(newContact));
 
     reset();
   };
@@ -79,7 +82,7 @@ export const Form = () => {
           className={css.input}
           type="tel"
           name="number"
-          value={number}
+          value={phone}
           required
           onChange={handleChange}
         />
